@@ -5,7 +5,7 @@ from .database import Base, engine
 app = FastAPI(title="Propti backend")
 
 # Initialize database
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 # Include routers
 app.include_router(properties)
