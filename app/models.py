@@ -27,12 +27,26 @@ class Landlord(Base):
     landlord_id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
     phone_number = Column(String)
-    password_hash = Column(String)
+    password_hash = Column(String, nullable=True)  # Keep nullable for Firebase users
     name = Column(String)
+    firebase_uid = Column(String(128), unique=True, nullable=True)  # ADD THIS LINE
     created_at = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     updated_at = Column(DateTime, onupdate=text("CURRENT_TIMESTAMP"))
     settings = Column(JSON, default={"reminder_interval": "weekly"})
     properties = relationship("Property", back_populates="landlord")
+
+
+# class Landlord(Base):
+#     __tablename__ = "landlords"
+#     landlord_id = Column(Integer, primary_key=True, index=True)
+#     email = Column(String, unique=True, index=True)
+#     phone_number = Column(String)
+#     password_hash = Column(String)
+#     name = Column(String)
+#     created_at = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
+#     updated_at = Column(DateTime, onupdate=text("CURRENT_TIMESTAMP"))
+#     settings = Column(JSON, default={"reminder_interval": "weekly"})
+#     properties = relationship("Property", back_populates="landlord")
 
 class Property(Base):
     __tablename__ = "properties"
