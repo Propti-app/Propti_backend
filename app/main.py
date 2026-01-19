@@ -21,7 +21,7 @@ app.include_router(reports)
 #__init___.py files are not needed in FastAPI apps, so they are omitted.
 @app.get("/")
 def read_root():
-    return {"message": "TRMS Backend Running by Delma"}
+    return {"message": "TRMS Backend Running"}
 
 
 
