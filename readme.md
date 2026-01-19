@@ -473,6 +473,6 @@ def create(resource: schemas.MyResourceCreate, db: Session = Depends(get_db)):
 
 This project is proprietary and confidential.
 
-## Contact & Support.
+## Contact & Support..
 
 For issues or questions, please contact the development team.
