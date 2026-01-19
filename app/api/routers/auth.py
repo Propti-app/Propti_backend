@@ -81,4 +81,4 @@ def get_current_user(
     """Get current user profile"""
     return current_landlord
 
-
+# app/api/routers/rooms.py
