@@ -32,7 +32,7 @@ Propti is a backend service designed to manage the complete lifecycle of rental 
 
 ## Features
 
-✨ **Core Functionality:**
+**Core Functionality:**
 - Multi-property management
 - Room and tenant tracking
 - Automated rent cycle creation
@@ -43,13 +43,13 @@ Propti is a backend service designed to manage the complete lifecycle of rental 
 - Tenant archival and historical tracking
 - Landlord settings and preferences
 
-🔐 **Security:**
+**Security:**
 - Firebase Authentication integration
 - Role-based access control
 - Secure password hashing (bcrypt)
 - JWT token support
 
-📊 **Reporting:**
+**Reporting:**
 - Payment status reports
 - Rent collection analytics
 - Tenant balance tracking
