@@ -21,7 +21,6 @@ class ReportStatus(str, Enum):
     PENDING = "Pending"
     GENERATED = "Generated"
 
-# ============ FIREBASE AUTH SCHEMAS (NEW) ============
 
 class LandlordSync(BaseModel):
     """For syncing Firebase users to database - NO PASSWORD"""
@@ -32,7 +31,7 @@ class LandlordSync(BaseModel):
     class Config:
         from_attributes = True
 
-# ============ LANDLORD SCHEMAS ============
+
 
 class LandlordCreate(BaseModel):
     """Legacy - for old password-based auth"""
@@ -43,7 +42,7 @@ class LandlordCreate(BaseModel):
 
 class LandlordResponse(BaseModel):
     landlord_id: int
-    firebase_uid: Optional[str] = None  # ADDED for Firebase
+    firebase_uid: Optional[str] = None  
     email: EmailStr
     phone_number: str
     name: str
@@ -95,7 +94,6 @@ class RoomResponse(BaseModel):
     class Config:
         from_attributes = True
 
-# ============ TENANT SCHEMAS ============
 
 class TenantCreate(BaseModel):
     full_name: str
