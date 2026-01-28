@@ -6,6 +6,33 @@ from ...utils.auth import get_current_landlord_id
 
 router = APIRouter(prefix="/tenants", tags=["Tenants"])
 
+
+
+
+#new router to get all tenants for landlord
+@router.get("/", response_model=list[schemas.TenantResponse])
+def get_tenants(
+    landlord_id: int = Depends(get_current_landlord_id),
+    db: Session = Depends(get_db),
+    skip: int = 0,
+    limit: int = 100
+):
+    # Get all tenants whose rooms belong to landlord's properties
+    tenants = db.query(models.Tenant).join(
+        models.Room, 
+        models.Tenant.assigned_room_id == models.Room.room_id,
+        isouter=True  # Left join to include tenants without rooms
+    ).join(
+        models.Property, 
+        models.Room.property_id == models.Property.property_id,
+        isouter=True
+    ).filter(
+        (models.Property.landlord_id == landlord_id) | 
+        (models.Tenant.assigned_room_id == None)  # Include unassigned tenants
+    ).offset(skip).limit(limit).all()
+    
+    return tenants
+
 @router.post("/", response_model=schemas.TenantResponse)
 def create_tenant(
     tenant: schemas.TenantCreate,
