@@ -6,7 +6,32 @@ from ...utils.auth import get_current_landlord_id
 
 router = APIRouter(prefix="/tenants", tags=["Tenants"])
 
-
+@router.get("/{tenant_id}", response_model=schemas.TenantResponse)
+def get_tenant_details(
+    tenant_id: int,
+    landlord_id: int = Depends(get_current_landlord_id),
+    db: Session = Depends(get_db)
+):
+    """Get tenant details with room info"""
+    tenant = db.query(models.Tenant).filter(
+        models.Tenant.tenant_id == tenant_id
+    ).first()
+    
+    if not tenant:
+        raise HTTPException(status_code=404, detail="Tenant not found")
+    
+    # Verify tenant belongs to landlord's property
+    if tenant.assigned_room_id:
+        room = db.query(models.Room).join(
+            models.Property, models.Room.property_id == models.Property.property_id
+        ).filter(
+            models.Room.room_id == tenant.assigned_room_id,
+            models.Property.landlord_id == landlord_id
+        ).first()
+        if not room:
+            raise HTTPException(status_code=403, detail="Not authorized")
+    
+    return tenant
 
 
 #new router to get all tenants for landlord
