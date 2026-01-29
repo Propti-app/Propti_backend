@@ -254,6 +254,34 @@ class DashboardResponse(BaseModel):
     overdue_rooms: int
     
     class Config:
+        from_attributes = 
+        
+class PropertyMetrics(BaseModel):
+    property_id: int
+    property_name: str
+    total_rooms: int
+    total_tenants: int
+    paid_rooms: int
+    partial_rooms: int
+    overdue_rooms: int
+    
+    class Config:
+        from_attributes = True
+
+
+class EnhancedDashboardResponse(BaseModel):
+    expected_rent: float
+    total_paid: float
+    outstanding_balance: float
+    total_tenants: int
+    properties: List[PropertyResponse]
+    total_rooms: int
+    paid_rooms: int
+    partial_rooms: int
+    overdue_rooms: int
+    property_metrics: List[PropertyMetrics]
+    
+    class Config:
         from_attributes = True
 
 
