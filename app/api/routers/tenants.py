@@ -5,7 +5,7 @@ from typing import List
 from app import crud, schemas
 from app.database import get_db
 from app.utils.auth import get_current_landlord
-from app.utils.auth import get_current_landlord
+
 
 router = APIRouter(prefix="/tenants", tags=["tenants"])
 
