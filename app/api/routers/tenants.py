@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app import crud, schemas
 from app.database import get_db
-from app.api.dependencies import get_current_landlord
+
 
 router = APIRouter(prefix="/tenants", tags=["tenants"])
 
