@@ -62,6 +62,7 @@ class Room(Base):
 class Tenant(Base):
     __tablename__ = "tenants"
     tenant_id = Column(Integer, primary_key=True, index=True)
+    landlord_id = Column(Integer, ForeignKey("landlords.landlord_id"))  # ← ADD THIS LINE
     full_name = Column(String)
     phone_number = Column(String)
     email = Column(String, nullable=True)
@@ -77,9 +78,32 @@ class Tenant(Base):
     created_at = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     updated_at = Column(DateTime, onupdate=text("CURRENT_TIMESTAMP"))
     is_active = Column(Boolean, default=True)
+    landlord = relationship("Landlord")  # ← ADD THIS LINE
     assigned_room = relationship("Room", back_populates="tenants")
     payments = relationship("Payment", back_populates="tenant")
-    reminders = relationship("Reminder", back_populates="tenant")
+    reminders = relationship("Reminder", back_populates="tenant")    
+
+# class Tenant(Base):
+#     __tablename__ = "tenants"
+#     tenant_id = Column(Integer, primary_key=True, index=True)
+#     full_name = Column(String)
+#     phone_number = Column(String)
+#     email = Column(String, nullable=True)
+#     faculty = Column(String, nullable=True)
+#     year_of_study = Column(String, nullable=True)
+#     guardian_phone_number = Column(String, nullable=True)
+#     guardian_name = Column(String, nullable=True)
+#     guardian_location = Column(String, nullable=True)
+#     photo = Column(String, nullable=True)
+#     id_card_number = Column(String, nullable=True)
+#     assigned_room_id = Column(Integer, ForeignKey("rooms.room_id"), nullable=True)
+#     balance = Column(Float, default=0.0)
+#     created_at = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
+#     updated_at = Column(DateTime, onupdate=text("CURRENT_TIMESTAMP"))
+#     is_active = Column(Boolean, default=True)
+#     assigned_room = relationship("Room", back_populates="tenants")
+#     payments = relationship("Payment", back_populates="tenant")
+#     reminders = relationship("Reminder", back_populates="tenant")
 
 class ArchivedTenant(Base):
     __tablename__ = "archived_tenants"
