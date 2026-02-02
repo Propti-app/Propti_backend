@@ -165,19 +165,19 @@ def assign_tenant_to_room(db: Session, tenant_id: int, room_id: int):
 
 
 def vacate_and_archive_tenant(db: Session, tenant_id: int):
-    """Vacate tenant and archive their data - WORKS WITH CURRENT DATABASE"""
+    """Vacate tenant - works with CURRENT database schema"""
     db_tenant = db.query(Tenant).filter(Tenant.tenant_id == tenant_id).first()
     if not db_tenant:
         raise ValueError("Tenant not found")
     
-    # Create archived record - ONLY use fields that exist in current database
+    # Create archived record - ONLY fields that exist in your DB
     db_archived = ArchivedTenant(
         original_tenant_id=db_tenant.tenant_id,
         full_name=db_tenant.full_name,
         phone_number=db_tenant.phone_number,
         email=db_tenant.email,
-        balance=db_tenant.balance  # Use 'balance' not 'final_balance'
-        # NOT including: landlord_id, room_number, final_balance
+        balance=db_tenant.balance  # NOT final_balance!
+        # NOT including: landlord_id, room_number (don't exist in your DB)
     )
     
     db.add(db_archived)
@@ -185,7 +185,7 @@ def vacate_and_archive_tenant(db: Session, tenant_id: int):
     # Vacate room if assigned
     if db_tenant.assigned_room_id:
         room = db.query(Room).filter(Room.room_id == db_tenant.assigned_room_id).first()
-        if room:
+        if room and hasattr(room, 'is_occupied'):  # Check if field exists
             room.is_occupied = False
     
     # Deactivate tenant
@@ -196,6 +196,44 @@ def vacate_and_archive_tenant(db: Session, tenant_id: int):
     db.refresh(db_archived)
     
     return db_archived
+
+
+
+
+
+
+# def vacate_and_archive_tenant(db: Session, tenant_id: int):
+#     """Vacate tenant and archive their data - WORKS WITH CURRENT DATABASE"""
+#     db_tenant = db.query(Tenant).filter(Tenant.tenant_id == tenant_id).first()
+#     if not db_tenant:
+#         raise ValueError("Tenant not found")
+    
+#     # Create archived record - ONLY use fields that exist in current database
+#     db_archived = ArchivedTenant(
+#         original_tenant_id=db_tenant.tenant_id,
+#         full_name=db_tenant.full_name,
+#         phone_number=db_tenant.phone_number,
+#         email=db_tenant.email,
+#         balance=db_tenant.balance  # Use 'balance' not 'final_balance'
+#         # NOT including: landlord_id, room_number, final_balance
+#     )
+    
+#     db.add(db_archived)
+    
+#     # Vacate room if assigned
+#     if db_tenant.assigned_room_id:
+#         room = db.query(Room).filter(Room.room_id == db_tenant.assigned_room_id).first()
+#         if room:
+#             room.is_occupied = False
+    
+#     # Deactivate tenant
+#     db_tenant.assigned_room_id = None
+#     db_tenant.is_active = False
+    
+#     db.commit()
+#     db.refresh(db_archived)
+    
+#     return db_archived
 
 
 
