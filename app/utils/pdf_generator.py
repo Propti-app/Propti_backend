@@ -155,7 +155,7 @@ def generate_payment_receipt(payment_data: dict) -> BytesIO:
     elements.append(amount_table)
     elements.append(Spacer(1, 0.5*inch))
     
-    # Footer
+
     footer_style = ParagraphStyle(
         'Footer',
         parent=styles['Normal'],
@@ -167,8 +167,7 @@ def generate_payment_receipt(payment_data: dict) -> BytesIO:
     
     elements.append(Paragraph("Thank you for your payment!", footer_style))
     elements.append(Paragraph(f"Generated on {datetime.now().strftime('%d/%m/%Y %H:%M')}", footer_style))
-    
-    # Build PDF
+ 
     doc.build(elements)
     
     buffer.seek(0)
