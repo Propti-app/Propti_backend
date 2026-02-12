@@ -12,7 +12,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # CONNECTION POOL SETTINGS
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,  # Test connections before using
+    pool_pre_ping=True,  # Test connections before using.
     pool_recycle=3600,   #Recycle connections every hour
     pool_size=5,         # Max 5 connections
     max_overflow=10,     # Allow 10 extra connections
