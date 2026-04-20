@@ -201,17 +201,6 @@ def vacate_and_archive_tenant(db: Session, tenant_id: int):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def deactivate_tenant(db: Session, tenant_id: int):
     """Deactivate a tenant without archiving"""
     db_tenant = db.query(Tenant).filter(Tenant.tenant_id == tenant_id).first()
