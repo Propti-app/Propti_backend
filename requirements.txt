@@ -1,4 +1,4 @@
-#Dependencies for the Propti backend application
+#Dependencies for the Propti backend application.
 
 fastapi==0.115.0
 uvicorn==0.30.6
