@@ -104,3 +104,41 @@ async def upload_property_image(
         "file_id": result["file_id"],
         "total_images": len(urls),
     }
+
+# Add to app/api/routers/media.py temporarily
+
+@router.get("/debug/appwrite")
+async def debug_appwrite():
+    import os
+    endpoint   = os.getenv("APPWRITE_ENDPOINT", "").strip()
+    project_id = os.getenv("APPWRITE_PROJECT_ID", "").strip()
+    api_key    = os.getenv("APPWRITE_API_KEY", "").strip()
+    bucket_id  = os.getenv("APPWRITE_BUCKET_ID", "").strip()
+
+    # Test actual connection
+    import httpx
+    headers = {
+        "X-Appwrite-Project": project_id,
+        "X-Appwrite-Key":     api_key,
+    }
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            r = await client.get(
+                f"{endpoint}/storage/buckets/{bucket_id}",
+                headers=headers,
+            )
+        bucket_response = r.json()
+        bucket_status   = r.status_code
+    except Exception as e:
+        bucket_response = str(e)
+        bucket_status   = -1
+
+    return {
+        "endpoint":       endpoint,
+        "project_id":     project_id,
+        "api_key_set":    bool(api_key),
+        "api_key_prefix": api_key[:8] + "..." if len(api_key) > 8 else "TOO SHORT",
+        "bucket_id":      bucket_id,
+        "bucket_status":  bucket_status,
+        "bucket_response": bucket_response,
+    }
