@@ -1,6 +1,13 @@
+
+```markdown
+# Propti Backend
+
+Propti is a FastAPI backend for rental property management. It provides REST APIs for managing properties, rooms, tenants, rent cycles, payments, reminders, reports, and Firebase authentication.
+=======
 # Propti Backend
 
 A comprehensive property management system built with FastAPI and SQLAlchemy. Propti helps landlords manage properties, rooms, tenants, rent cycles, and payments with ease.
+
 
 ## Table of Contents
 
@@ -8,6 +15,61 @@ A comprehensive property management system built with FastAPI and SQLAlchemy. Pr
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Run](#run)
+- [API Documentation](#api-documentation)
+- [Health Check](#health-check)
+- [Project Structure](#project-structure)
+- [Testing](#testing)
+- [Notes](#notes)
+
+## Overview
+
+The Propti backend supports landlord workflows with APIs for:
+
+- Property and room management
+- Tenant and guarantor tracking
+- Rent cycle scheduling
+- Payment processing and status tracking
+- Reminder generation
+- Reporting and PDF generation
+- Firebase-backed authentication
+
+## Features
+
+- CRUD endpoints for properties, rooms, tenants, rent cycles, payments, landlords, reminders, and reports
+- Automatic database table creation on startup
+- Firebase authentication integration
+- CORS enabled for all origins
+- Swagger and ReDoc API documentation
+- Production-ready server support via Gunicorn
+
+## Tech Stack
+
+- Python 3.10+
+- FastAPI
+- Uvicorn
+- SQLAlchemy
+- PostgreSQL
+- Firebase Admin SDK
+- Pydantic
+- ReportLab
+- APScheduler
+- pytest
+
+## Prerequisites
+
+- Python 3.10 or higher
+- PostgreSQL 12 or newer
+- Git
+- Firebase project with a service account key
+
+## Installation
+
+1. Clone the repository:
+=======
 - [Installation & Setup](#installation--setup)
 - [Configuration](#configuration)
 - [Project Structure](#project-structure)
